@@ -45,3 +45,26 @@ if(WITH_openssl MATCHES ON)
     # add_executable(server server.c)
     # target_link_libraries(server ${OPENSSL_CRYPTO_LIBRARIES} ${OPENSSL_SSL_LIBRARIES})
 endif(WITH_openssl MATCHES ON)
+
+include(CheckCSourceRuns)
+
+check_c_source_runs("int main(void){short int number = 0x1; char *numPtr = (char*)&number; return (numPtr[0] == 1) ? 0 : 3;}" USE_LITTLE_ENDIAN)
+check_c_source_runs("int main(void){short int number = 0x1; char *numPtr = (char*)&number; return (numPtr[0] == 0) ? 0: 1 ;}" USE_BIG_ENDIAN)
+
+if(USE_LITTLE_ENDIAN)
+    message(STATUS "Detected little endian architecture")
+    add_definitions(-DSPECTRA_ENDIAN_LIT)
+else()
+    if(USE_BIG_ENDIAN)
+        message(STATUS "Detetcted big endian architecture")
+        add_definitions(-DSPECTRA_ENDIAN_BIG)
+    else()
+        message(FATAL "Cannot determine endian type")
+    endif()
+endif()
+
+add_subdirectory(sulfurr_core)
+
+# include_directories(${PROJECT_SOURCE_DIR}/include)
+
+
