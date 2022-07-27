@@ -1,2 +1,7 @@
 # cmake testing dir for sulfur core
 
+include_directories(${PROJECT_SOURCE_DIR}/sulfur_core)
+
+add_executable(sulfur_core_data_set_tests sulfur_core_data_set_tests.c)
+target_link_libraries(sulfur_core_data_set_tests sulfur_core)
+add_test(sulfur_core_data_set_tests sulfur_core_data_set_tests)

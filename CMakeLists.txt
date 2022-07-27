@@ -63,7 +63,7 @@ else()
     endif()
 endif()
 
-add_subdirectory(sulfurr_core)
+add_subdirectory(sulfur_core)
 
 # include_directories(${PROJECT_SOURCE_DIR}/include)
 
